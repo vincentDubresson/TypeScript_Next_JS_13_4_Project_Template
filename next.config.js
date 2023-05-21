@@ -1,4 +1,9 @@
-/** @type {import('next').NextConfig} */
+// https://nextjs.org/docs/api-reference/next.config.js/introduction
+
+/** 
+ * es-lint error is due to vscode extension
+ * @type {import('next').NextConfig}
+ * */
 const nextConfig = {}
 
-export default nextConfig
+module.exports = nextConfig
