@@ -1,0 +1,34 @@
+name: EsLint-Prettier on Push
+on:
+  push:
+    branches-ignore:
+      - master
+      - production
+
+jobs:
+  eslint-for-push:
+    name: runner / eslint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - uses: reviewdog/action-eslint@v1
+        with:
+          reporter: github-check
+          eslint_flags: 'src/'
+          
+  prettier-for-push:
+    runs-on: ubuntu-latest
+    needs: eslint-for-push
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Format TS and TSX files with Prettier
+        run: |
+          npm i
+          npm run format:fix
+          git add .
+          git config user.name "GitHub Actions"
+          git config user.email "<>"
+          git commit -m "[auto] Format TS and TSX files with Prettier" || true
+          git push
