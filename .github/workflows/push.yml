@@ -7,16 +7,16 @@ on:
 
 jobs:
   eslint-for-push:
-    name: runner / eslint
+    name: eslint-for-push
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
       - uses: reviewdog/action-eslint@v1
         with:
           reporter: github-check
           eslint_flags: 'src/'
-          
+
   prettier-for-push:
     runs-on: ubuntu-latest
     needs: eslint-for-push
