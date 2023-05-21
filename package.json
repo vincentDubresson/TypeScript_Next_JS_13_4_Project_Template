@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test:watch": "jest --watch ./__tests__/*.test.tsx",
+    "test": "jest ./__tests__/*.test.tsx",
     "format:fix": "prettier --write \"**/*.{ts,tsx}\""
   },
   "dependencies": {

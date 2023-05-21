@@ -12,4 +12,4 @@ jobs:
       - name: Check some Tests with Jest
         run: |
           npm i
-          npm run test:watch
+          npm run test
