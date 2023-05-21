@@ -1,0 +1,15 @@
+name: test-for-pull-request
+
+on:
+  pull_request:
+
+jobs:
+  jest-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Check some Tests with Jest
+        run: |
+          npm i
+          npm run test:watch
