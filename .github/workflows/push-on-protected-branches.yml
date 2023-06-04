@@ -1,0 +1,49 @@
+name: fix-formatting-and-build-and-test-for-push-on-protected-branches
+
+on:
+  push:
+    # Add, remove, or change branches as needed.
+    branches:
+      - master
+      # - main
+      - dev
+      # - develop
+      # - staging
+      # - production
+
+jobs:
+  eslint-for-push-on-protected-branches:
+    name: eslint-for-push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - uses: reviewdog/action-eslint@v1
+        with:
+          reporter: github-check
+          eslint_flags: 'src/'
+
+  prettier-for-push-on-protected-branches:
+    runs-on: ubuntu-latest
+    needs: eslint-for-push
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Format TS and TSX files with Prettier
+        run: |
+          npm i
+          npm run format:fix
+          git add .
+          git config user.name "GitHub Actions"
+          git config user.email "<>"
+          git commit -m "[auto] Format TS and TSX files with Prettier" || true
+          git push
+
+  jest-tests-for-push-on-protected-branches:
+    runs-on: ubuntu-latest
+    needs: prettier-for-push-on-protected-branches
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Build and test Website
+        run: docker compose -f docker-compose.ci.website.yml up --build --exit-code-from website
