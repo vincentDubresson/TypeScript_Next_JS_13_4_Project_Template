@@ -9,7 +9,5 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
-      - name: Check some Tests with Jest
-        run: |
-          npm i
-          npm run test
+      - name: Build and test Website
+        run: docker compose -f docker-compose.ci.website.yml up --build --exit-code-from website

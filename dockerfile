@@ -9,3 +9,6 @@ COPY . ./
 
 FROM base as dev
 CMD npm run dev
+
+FROM base as ci
+CMD npm run test
